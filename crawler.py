@@ -8,7 +8,8 @@ def printallbusinfo(tbody):
 driver = webdriver.Firefox()
 driver.get("https://www.appalcart.com/live-transit")
 assert "ETA" in driver.title
-
+import time
+time.sleep(5)
 driver.find_element(By.CLASS_NAME, "routeSelectAllLabel").click()
 driver.find_element(By.ID, "B24").click()
 busInfo = driver.find_element(By.CSS_SELECTOR, ".asset-info-eta table tbody")
