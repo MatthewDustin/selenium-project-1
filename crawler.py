@@ -1,13 +1,21 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+def printallbusinfo(tbody):
+    tbody = tbody.find_elements(By.TAG_NAME, "td")
+    for row in tbody:
+        print(row.text)
 driver = webdriver.Firefox()
 driver.get("https://www.appalcart.com/live-transit")
 assert "ETA" in driver.title
-elem = driver.find_element(By.NAME, "q")
-elem.clear()
-elem.send_keys("pycon")
-elem.send_keys(Keys.RETURN)
+import time
+#driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+driver.find_element(By.CLASS_NAME, "uHKx2t").click()
+time.sleep(1)
+
+driver.find_element(By.CLASS_NAME, "routeSelectAllLabel").click()
+driver.find_element(By.ID, "B24").click()
+busInfo = driver.find_element(By.CSS_SELECTOR, ".asset-info-eta table tbody")
+printallbusinfo(busInfo)
 assert "No results found." not in driver.page_source
 driver.close()
