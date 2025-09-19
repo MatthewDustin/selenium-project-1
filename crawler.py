@@ -4,23 +4,40 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
-
+import time
 def printallbusinfo(tbody):
     tbody = tbody.find_elements(By.TAG_NAME, "td")
     for row in tbody:
         print(row.text)
 
 driver = webdriver.Firefox()
+
+wait = WebDriverWait(driver, 10)
+#set delay between url loads
+delay = 3 # seconds
+
 driver.maximize_window()
 driver.get("https://www.holtonmountainrentals.com/view-all-properties")
-wait = WebDriverWait(driver, 10)
 
-import time
+
+
 
 links = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "td a::attr(href)")))
+
 for url in links:
-    yield scrapy.Request(url, callback=RentalSpider.holtonItem)
-    return
+    print(url.get_attribute("href"))
+    driver.execute_script("window.open('');")
+    driver.switch_to.window(driver.window_handles[-1])
+    driver.get(url.get_attribute("href"))
+    bedrooms
+    bathroooms
+    features
+    description
+
+    time.sleep(delay)
+    driver.close()
+    driver.switch_to.window(driver.window_handles[0])
+
 #elem = wait.until(EC.element_to_be_clickable((By.XPATH, "(//li[@class='wixui-anchor-menu__item'])[2]/a")))
 #wait.until(EC.element_to_be_selected(driver.find_elements(By.CSS_SELECTOR, "circle")[1]))
 #driver.find_elements(By.CSS_SELECTOR, "circle")[1].click()
