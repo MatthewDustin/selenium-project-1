@@ -32,6 +32,7 @@ for url in links:
     bedrooms
     bathroooms
     features
+    description
     
     time.sleep(delay)
     driver.close()
