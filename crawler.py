@@ -12,12 +12,15 @@ def printallbusinfo(tbody):
 
 driver = webdriver.Firefox()
 driver.maximize_window()
-driver.get("https://www.appalcart.com/live-transit")
+driver.get("https://www.holtonmountainrentals.com/view-all-properties")
 wait = WebDriverWait(driver, 10)
-assert "ETA" in driver.title
+
 import time
 
-
+links = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "td a::attr(href)")))
+for url in links:
+    yield scrapy.Request(url, callback=RentalSpider.holtonItem)
+    return
 #elem = wait.until(EC.element_to_be_clickable((By.XPATH, "(//li[@class='wixui-anchor-menu__item'])[2]/a")))
 #wait.until(EC.element_to_be_selected(driver.find_elements(By.CSS_SELECTOR, "circle")[1]))
 #driver.find_elements(By.CSS_SELECTOR, "circle")[1].click()
